@@ -1,0 +1,347 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --color-background: #0A0A0A;
+  --color-foreground: #EDEDED;
+  --color-primary: #0070F3;
+  --color-primary-hover: #0060D0;
+  --color-surface: #1A1A1A;
+  --color-surface-hover: #252525;
+  --color-border: #1A1A1A;
+  --color-border-hover: #333333;
+  --color-muted: #888888;
+  --color-glow: #0070F3;
+  --font-sans: var(--font-sans);
+  --font-mono: var(--font-geist-mono), "Fira Code", monospace;
+  --font-heading: var(--font-sans);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+  --radius-2xl: calc(var(--radius) * 1.8);
+  --radius-3xl: calc(var(--radius) * 2.2);
+  --radius-4xl: calc(var(--radius) * 2.6);
+
+  --color-skeleton: hsl(218, 36%, 16%);
+
+  --animate-ripple: ripple 2s ease calc(var(--i, 0) * 0.2s) infinite;
+  --animate-orbit: orbit calc(var(--duration) * 1s) linear infinite;
+}
+
+@keyframes ripple {
+
+  0%,
+  100% {
+    transform: translate(-50%, -50%) scale(1);
+  }
+
+  50% {
+    transform: translate(-50%, -50%) scale(0.9);
+  }
+}
+
+@keyframes orbit {
+  0% {
+    transform: rotate(0deg) translateY(calc(var(--radius) * 1px)) rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg) translateY(calc(var(--radius) * 1px)) rotate(-360deg);
+  }
+}
+
+/* ─── Base ─── */
+body {
+  background: var(--color-background);
+  color: var(--color-foreground);
+  font-family: var(--font-sans);
+  scroll-behavior: smooth;
+}
+
+/* ─── Glow effects ─── */
+.glow-border {
+  box-shadow: 0 0 15px rgba(0, 112, 243, 0.35),
+    0 0 30px rgba(0, 112, 243, 0.15);
+  border: 1px solid rgba(0, 112, 243, 0.5);
+}
+
+.glow-text {
+  text-shadow: 0 0 20px rgba(0, 112, 243, 0.6),
+    0 0 40px rgba(0, 112, 243, 0.3);
+}
+
+.glow-border-hover {
+  transition: box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+.glow-border-hover:hover {
+  box-shadow: 0 0 20px rgba(0, 112, 243, 0.4),
+    0 0 40px rgba(0, 112, 243, 0.2);
+  border-color: rgba(0, 112, 243, 0.6);
+}
+
+/* ─── Hero gradient text ─── */
+.gradient-text {
+  background: linear-gradient(135deg, #ffffff 0%, #0070F3 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ─── Particle canvas ─── */
+.particle-canvas {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* ─── Chevron bounce ─── */
+@keyframes bounce-slow {
+
+  0%,
+  100% {
+    transform: translateY(0);
+    opacity: 0.6;
+  }
+
+  50% {
+    transform: translateY(12px);
+    opacity: 1;
+  }
+}
+
+.animate-bounce-slow {
+  animation: bounce-slow 2s ease-in-out infinite;
+}
+
+/* ─── Upload progress bar ─── */
+@keyframes progress-fill {
+  from {
+    width: 0%;
+  }
+
+  to {
+    width: 100%;
+  }
+}
+
+.animate-progress {
+  animation: progress-fill 3s ease-in-out forwards;
+}
+
+/* ─── Modal backdrop ─── */
+.modal-backdrop {
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(8px);
+}
+
+/* ─── Scrollbar ─── */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #0A0A0A;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #333;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+/* ─── Card float animation ─── */
+@keyframes float {
+
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-6px);
+  }
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+/* ─── Marquee scroll ─── */
+@keyframes marquee-scroll {
+  0% {
+    transform: translateX(0);
+  }
+
+  100% {
+    transform: translateX(-33.333%);
+  }
+}
+
+.animate-marquee {
+  animation: marquee-scroll 30s linear infinite;
+}
+
+/* ─── Navbar: Liquid Glass Pill ─── */
+.navbar-glass {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.4rem 0.75rem;
+  border-radius: 9999px;
+  background: rgba(255, 255, 255, 0.04);
+  backdrop-filter: blur(24px) saturate(1.4);
+  -webkit-backdrop-filter: blur(24px) saturate(1.4);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow:
+    inset 0 1px 1px rgba(255, 255, 255, 0.06),
+    inset 0 -1px 2px rgba(0, 0, 0, 0.1),
+    0 8px 32px rgba(0, 0, 0, 0.35),
+    0 0 0 0.5px rgba(255, 255, 255, 0.05);
+  transition: box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+.navbar-glass:hover {
+  border-color: rgba(255, 255, 255, 0.12);
+  box-shadow:
+    inset 0 1px 1px rgba(255, 255, 255, 0.08),
+    inset 0 -1px 2px rgba(0, 0, 0, 0.1),
+    0 8px 40px rgba(0, 0, 0, 0.4),
+    0 0 20px rgba(0, 112, 243, 0.08),
+    0 0 0 0.5px rgba(255, 255, 255, 0.08);
+}
+
+/* Override dock-panel inside navbar to be inline, no absolute positioning */
+.navbar-dock-panel {
+  position: relative !important;
+  bottom: auto !important;
+  left: auto !important;
+  transform: none !important;
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+  gap: 0.35rem !important;
+  backdrop-filter: none !important;
+}
+
+/* ─── Navbar Buttons ─── */
+.navbar-btn {
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  padding: 0.35rem 0.85rem;
+  border-radius: 9999px;
+  transition: all 0.2s ease;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.navbar-btn-ghost {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.navbar-btn-ghost:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.2);
+  color: #fff;
+}
+
+.navbar-btn-primary {
+  background: rgba(0, 112, 243, 0.7);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(0, 112, 243, 0.4);
+  color: #fff;
+  font-weight: 600;
+  box-shadow: 0 0 12px rgba(0, 112, 243, 0.25);
+}
+
+.navbar-btn-primary:hover {
+  background: rgba(0, 112, 243, 0.85);
+  border-color: rgba(0, 112, 243, 0.6);
+  box-shadow: 0 0 20px rgba(0, 112, 243, 0.4);
+}
+
+
+
+@layer base {
+  :root {
+    --radius: 0.75rem;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+    --sidebar-border: 240 3.7% 15.9%;
+    --sidebar-accent-foreground: 240 4.8% 95.9%;
+    --sidebar-accent: 240 3.7% 15.9%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-primary: 224.3 76.3% 48%;
+    --sidebar-foreground: 240 4.8% 95.9%;
+    --sidebar: 240 5.9% 10%;
+    --chart-5: 160 60% 45%;
+    --chart-4: 280 65% 60%;
+    --chart-3: 30 80% 55%;
+    --chart-2: 173 58% 39%;
+    --chart-1: 12 76% 61%;
+    --ring: 240 4.9% 83.9%;
+    --input: 240 3.7% 15.9%;
+    --destructive: 0 62.8% 30.6%;
+    --accent-foreground: 240 4.8% 95.9%;
+    --accent: 240 3.7% 15.9%;
+    --muted-foreground: 240 5% 64.9%;
+    --secondary-foreground: 0 0% 98%;
+    --secondary: 240 3.7% 15.9%;
+    --primary-foreground: 0 0% 9%;
+    --popover-foreground: 0 0% 98%;
+    --popover: 240 10% 3.9%;
+    --card-foreground: 0 0% 98%;
+    --card: 240 10% 3.9%;
+  }
+
+  * {
+    border-color: var(--color-border);
+    outline-color: color-mix(in srgb, var(--color-ring) 50%, transparent);
+  }
+
+  body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+  }
+
+  html {
+    font-family: var(--font-sans);
+  }
+}

@@ -1,0 +1,67 @@
+services:
+  # ── Backend Express Server ──
+  - type: web
+    name: devops-buddy-backend
+    env: node
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: PORT
+        value: 4000
+      - key: NODE_ENV
+        value: production
+      # The following must be set manually in the Render dashboard:
+      - key: GEMINI_API_KEY
+        sync: false
+      - key: GITHUB_TOKEN
+        sync: false
+      - key: GITHUB_OWNER
+        sync: false
+      - key: GITHUB_REPO
+        sync: false
+      - key: DB_HOST
+        sync: false
+      - key: DB_PORT
+        sync: false
+      - key: DB_NAME
+        sync: false
+      - key: DB_USER
+        sync: false
+      - key: DB_PASSWORD
+        sync: false
+
+  # ── Frontend Next.js Server ──
+  - type: web
+    name: devops-buddy-frontend
+    env: node
+    rootDir: DevOps-Buddy-UI # Point Render to the Next.js directory
+    buildCommand: npm install && npm run build
+    startCommand: npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      # Dynamically grab the backend's live URL once deployed
+      - key: BACKEND_URL
+        fromService:
+          type: web
+          name: devops-buddy-backend
+          envVarKey: RENDER_EXTERNAL_URL
+      - key: NEXT_PUBLIC_BACKEND_STATUS_URL
+        fromService:
+          type: web
+          name: devops-buddy-backend
+          envVarKey: RENDER_EXTERNAL_URL
+      # Clerk auth keys must be set manually in the Render dashboard
+      - key: NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY
+        sync: false
+      - key: CLERK_SECRET_KEY
+        sync: false
+      # Static Clerk configuration
+      - key: NEXT_PUBLIC_CLERK_SIGN_IN_URL
+        value: /sign-in
+      - key: NEXT_PUBLIC_CLERK_SIGN_UP_URL
+        value: /sign-up
+      - key: NEXT_PUBLIC_CLERK_AFTER_SIGN_IN_URL
+        value: /dashboard
+      - key: NEXT_PUBLIC_CLERK_AFTER_SIGN_UP_URL
+        value: /dashboard
